@@ -11,24 +11,25 @@ public class AllocateLargeCPU implements AllocatorChain {
 	}
 
 	@Override
-	public void allocate(CPUParam parameters) {
-		if (parameters.getRequiredCount() > parameters.getTotalAllocatedCount() /* makeit as constasnt */) {
-			int num = parameters.getRequiredCount() - parameters.getTotalAllocatedCount();
+	public void allocate(InputParam input, AllocatedParam allocated) {
+		if (allocated.getTotalAllocatedCount() < input.getRequiredCount()) {
+			int allocation = input.getRequiredCount() - allocated.getTotalAllocatedCount();
 			int remaining = 0; // make it as const
-			System.out.println("Allocating " + num + " CPU(s)");
+			System.out.println("Allocating " + allocation + " CPU(s)");
 
-			parameters.setCpuLargeCount(num);
+			allocated.setCpuLargeCount(allocation);
+			// parameters.setCpuLargeCost(num * parameters.getCpuLargeCost());
 
-			parameters.setTotalAllocatedCount(parameters.getRequiredCount());
-			parameters.setTotalCost(parameters.getTotalCost() + (num * parameters.getCpuLargeCost()));
+			allocated.setTotalAllocatedCount(input.getRequiredCount());
+			allocated.setTotalCost(allocated.getTotalCost() + (allocation * input.getCpuLargeCost()));
 
 			/*
 			 * to write --> 1.delegating the request to other allocators 2. checking total
 			 * cost
 			 */
 
-			if (remaining != 0) {
-				this.allocatorChain.allocate(parameters);
+			if (remaining > 0) {
+				this.allocatorChain.allocate(input, allocated);
 			}
 
 		}

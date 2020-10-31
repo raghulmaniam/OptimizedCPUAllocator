@@ -4,6 +4,6 @@ public interface AllocatorChain {
 
 	
 	void setNextChain (AllocatorChain nextChain);
-	void allocate(CPUParam parameters);
+	void allocate(InputParam input, AllocatedParam allocated);
 	
 }
