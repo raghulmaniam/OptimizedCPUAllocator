@@ -3,14 +3,14 @@ package src.main.java;
 public class InputParam {
 
 	private int requiredCount;
-	private int requiredPrice;
+	private double requiredPrice;
 
-	private int cpuLargeCost;
-	private int cpuxLargeCost;
-	private int cpu2xLargeCost;
-	private int cpu4xLargeCost;
-	private int cpu8LargeCost;
-	private int cpu10xLargeCost;
+	private double cpuLargeCost;
+	private double cpuxLargeCost;
+	private double cpu2xLargeCost;
+	private double cpu4xLargeCost;
+	private double cpu8xLargeCost;
+	private double cpu10xLargeCost;
 
 	public int getRequiredCount() {
 		return requiredCount;
@@ -20,59 +20,59 @@ public class InputParam {
 		this.requiredCount = requiredCount;
 	}
 
-	public int getRequiredCost() {
+	public double getRequiredPrice() {
 		return requiredPrice;
 	}
 
-	public void setRequiredCost(int requiredCost) {
-		this.requiredPrice = requiredCost;
+	public void setRequiredPrice(double requiredPrice) {
+		this.requiredPrice = requiredPrice;
 	}
 
-	public int getCpuLargeCost() {
+	public double getCpuLargeCost() {
 		return cpuLargeCost;
 	}
 
-	public void setCpuLargeCost(int cpuLargeCost) {
+	public void setCpuLargeCost(double cpuLargeCost) {
 		this.cpuLargeCost = cpuLargeCost;
 	}
 
-	public int getCpuxLargeCost() {
+	public double getCpuxLargeCost() {
 		return cpuxLargeCost;
 	}
 
-	public void setCpuxLargeCost(int cpuxLargeCost) {
+	public void setCpuxLargeCost(double cpuxLargeCost) {
 		this.cpuxLargeCost = cpuxLargeCost;
 	}
 
-	public int getCpu2xLargeCost() {
+	public double getCpu2xLargeCost() {
 		return cpu2xLargeCost;
 	}
 
-	public void setCpu2xLargeCost(int cpu2xLargeCost) {
+	public void setCpu2xLargeCost(double cpu2xLargeCost) {
 		this.cpu2xLargeCost = cpu2xLargeCost;
 	}
 
-	public int getCpu4xLargeCost() {
+	public double getCpu4xLargeCost() {
 		return cpu4xLargeCost;
 	}
 
-	public void setCpu4xLargeCost(int cpu4xLargeCost) {
+	public void setCpu4xLargeCost(double cpu4xLargeCost) {
 		this.cpu4xLargeCost = cpu4xLargeCost;
 	}
 
-	public int getCpu8LargeCost() {
-		return cpu8LargeCost;
+	public double getCpu8xLargeCost() {
+		return cpu8xLargeCost;
 	}
 
-	public void setCpu8LargeCost(int cpu8LargeCost) {
-		this.cpu8LargeCost = cpu8LargeCost;
+	public void setCpu8xLargeCost(double cpu8LargeCost) {
+		this.cpu8xLargeCost = cpu8LargeCost;
 	}
 
-	public int getCpu10xLargeCost() {
+	public double getCpu10xLargeCost() {
 		return cpu10xLargeCost;
 	}
 
-	public void setCpu10xLargeCost(int cpu10xLargeCost) {
+	public void setCpu10xLargeCost(double cpu10xLargeCost) {
 		this.cpu10xLargeCost = cpu10xLargeCost;
 	}
 

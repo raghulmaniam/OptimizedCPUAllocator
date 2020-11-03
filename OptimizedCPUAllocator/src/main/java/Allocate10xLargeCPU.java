@@ -1,6 +1,6 @@
 package src.main.java;
 
-public class Allocate4xLargeCPU implements AllocatorChain
+public class Allocate10xLargeCPU implements AllocatorChain
 {
 
 	private AllocatorChain allocatorChain;
@@ -20,23 +20,23 @@ public class Allocate4xLargeCPU implements AllocatorChain
 		if ( input.getRequiredCount() > 0 )
 		{
 			int remaining = input.getRequiredCount() - allocated.getTotalAllocatedCount();
-			if ( remaining > Constants.TOTAL_CPU_4XLARGE )
-				allocation = remaining / Constants.TOTAL_CPU_4XLARGE;
+			if ( remaining > Constants.TOTAL_CPU_10XLARGE )
+				allocation = remaining / Constants.TOTAL_CPU_10XLARGE;
 
 		}
 		else if ( input.getRequiredPrice() > 0 )
 		{
 			double remaining = input.getRequiredPrice() - allocated.getTotalAllocatedPrice();
-			if ( remaining > input.getCpu4xLargeCost() )
-				allocation = ( int ) ( remaining / input.getCpu4xLargeCost() );
+			if ( remaining > input.getCpu10xLargeCost() )
+				allocation = ( int ) ( remaining / input.getCpu10xLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + " 4x Large CPU(s)" );
+		System.out.println( "Allocating " + allocation + " 10x Large CPU(s)" );
 
-		allocated.setCpu4xLargeCount( allocation );
+		allocated.setCpu10xLargeCount( allocation );
 
-		allocated.addAllocatedCount( allocation * Constants.TOTAL_CPU_4XLARGE );
-		allocated.addAllocatedPrice( allocation * input.getCpu4xLargeCost() );
+		allocated.addAllocatedCount( allocation * Constants.TOTAL_CPU_10XLARGE );
+		allocated.addAllocatedPrice( allocation * input.getCpu10xLargeCost() );
 
 		if ( ( input.getRequiredCount() > 0 && allocated.getTotalAllocatedCount() < input.getRequiredCount() ) || ( input.getRequiredPrice() > 0 && allocated.getTotalAllocatedPrice() < input.getRequiredPrice() ) )
 		{

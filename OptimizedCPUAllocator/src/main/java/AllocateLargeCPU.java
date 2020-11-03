@@ -1,38 +1,42 @@
 package src.main.java;
 
-public class AllocateLargeCPU implements AllocatorChain {
+public class AllocateLargeCPU implements AllocatorChain
+{
 
 	private AllocatorChain allocatorChain;
 
 	@Override
-	public void setNextChain(AllocatorChain nextChain) {
+	public void setNextChain( AllocatorChain nextChain )
+	{
 		this.allocatorChain = nextChain;
-
 	}
 
 	@Override
-	public void allocate(InputParam input, AllocatedParam allocated) {
-		if (allocated.getTotalAllocatedCount() < input.getRequiredCount()) {
-			int allocation = input.getRequiredCount() - allocated.getTotalAllocatedCount();
-			int remaining = 0; // make it as const
-			System.out.println("Allocating " + allocation + " CPU(s)");
+	public void allocate( InputParam input, AllocatedParam allocated )
+	{
 
-			allocated.setCpuLargeCount(allocation);
-			// parameters.setCpuLargeCost(num * parameters.getCpuLargeCost());
+		int allocation = 0;
 
-			allocated.setTotalAllocatedCount(input.getRequiredCount());
-			allocated.setTotalCost(allocated.getTotalCost() + (allocation * input.getCpuLargeCost()));
-
-			/*
-			 * to write --> 1.delegating the request to other allocators 2. checking total
-			 * cost
-			 */
-
-			if (remaining > 0) {
-				this.allocatorChain.allocate(input, allocated);
-			}
+		if ( input.getRequiredCount() > 0 )
+		{
+			int remaining = input.getRequiredCount() - allocated.getTotalAllocatedCount();
+			if ( remaining > Constants.TOTAL_CPU_LARGE )
+				allocation = remaining / Constants.TOTAL_CPU_LARGE;
 
 		}
+		else if ( input.getRequiredPrice() > 0 )
+		{
+			double remaining = input.getRequiredPrice() - allocated.getTotalAllocatedPrice();
+			if ( remaining > input.getCpuLargeCost() )
+				allocation = ( int ) ( remaining / input.getCpuLargeCost() );
+		}
+
+		System.out.println( "Allocating " + allocation + "  Large CPU(s)" );
+
+		allocated.setCpuLargeCount( allocation );
+
+		allocated.addAllocatedCount( allocation * Constants.TOTAL_CPU_10XLARGE );
+		allocated.addAllocatedPrice( allocation * input.getCpuLargeCost() );
 
 	}
 

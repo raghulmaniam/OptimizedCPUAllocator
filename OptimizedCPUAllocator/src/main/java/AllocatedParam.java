@@ -1,9 +1,10 @@
 package src.main.java;
 
-public class AllocatedParam {
+public class AllocatedParam
+{
 
 	private int totalAllocatedCount;
-	private int totalCost;
+	private double totalAllocatedPrice;
 
 	private int cpuLargeCount;
 	private int cpuxLargeCount;
@@ -12,67 +13,83 @@ public class AllocatedParam {
 	private int cpu8xLargeCount;
 	private int cpu10xLargeCount;
 
-	public int getTotalAllocatedCount() {
+	public int getTotalAllocatedCount()
+	{
 		return totalAllocatedCount;
 	}
 
-	public void setTotalAllocatedCount(int totalAllocatedCount) {
-		this.totalAllocatedCount = totalAllocatedCount;
+	public void addAllocatedCount( int totalAllocatedCount )
+	{
+		this.totalAllocatedCount = this.totalAllocatedCount + totalAllocatedCount;
 	}
 
-	public int getTotalCost() {
-		return totalCost;
+	public double getTotalAllocatedPrice()
+	{
+		return totalAllocatedPrice;
 	}
 
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
+	public void addAllocatedPrice( double totalCost )
+	{
+		this.totalAllocatedPrice = this.totalAllocatedPrice + totalCost;
 	}
 
-	public int getCpuLargeCount() {
+	public int getCpuLargeCount()
+	{
 		return cpuLargeCount;
 	}
 
-	public void setCpuLargeCount(int cpuLargeCount) {
+	public void setCpuLargeCount( int cpuLargeCount )
+	{
 		this.cpuLargeCount = cpuLargeCount;
 	}
 
-	public int getCpuxLargeCount() {
+	public int getCpuxLargeCount()
+	{
 		return cpuxLargeCount;
 	}
 
-	public void setCpuxLargeCount(int cpuxLargeCount) {
+	public void setCpuxLargeCount( int cpuxLargeCount )
+	{
 		this.cpuxLargeCount = cpuxLargeCount;
 	}
 
-	public int getCpu2xLargeCount() {
+	public int getCpu2xLargeCount()
+	{
 		return cpu2xLargeCount;
 	}
 
-	public void setCpu2xLargeCount(int cpu2xLargeCount) {
+	public void setCpu2xLargeCount( int cpu2xLargeCount )
+	{
 		this.cpu2xLargeCount = cpu2xLargeCount;
 	}
 
-	public int getCpu4xLargeCount() {
+	public int getCpu4xLargeCount()
+	{
 		return cpu4xLargeCount;
 	}
 
-	public void setCpu4xLargeCount(int cpu4xLargeCount) {
+	public void setCpu4xLargeCount( int cpu4xLargeCount )
+	{
 		this.cpu4xLargeCount = cpu4xLargeCount;
 	}
 
-	public int getCpu8xLargeCount() {
+	public int getCpu8xLargeCount()
+	{
 		return cpu8xLargeCount;
 	}
 
-	public void setCpu8xLargeCount(int cpu8xLargeCount) {
+	public void setCpu8xLargeCount( int cpu8xLargeCount )
+	{
 		this.cpu8xLargeCount = cpu8xLargeCount;
 	}
 
-	public int getCpu10xLargeCount() {
+	public int getCpu10xLargeCount()
+	{
 		return cpu10xLargeCount;
 	}
 
-	public void setCpu10xLargeCount(int cpu10xLargeCount) {
+	public void setCpu10xLargeCount( int cpu10xLargeCount )
+	{
 		this.cpu10xLargeCount = cpu10xLargeCount;
 	}
 
