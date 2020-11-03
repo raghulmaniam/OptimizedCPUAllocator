@@ -1,9 +1,15 @@
 package src.main.java;
 
+/*
+ * Author: Raghul S
+ * Date: 03 Nov 2020
+ */
+
 public class AllocatedParam
 {
 
 	private String region;
+	private String currency;
 
 	private int totalAllocatedCount;
 	private double totalAllocatedPrice;
@@ -103,6 +109,16 @@ public class AllocatedParam
 	public void setRegion( String region )
 	{
 		this.region = region;
+	}
+
+	public String getCurrency()
+	{
+		return currency;
+	}
+
+	public void setCurrency( String currency )
+	{
+		this.currency = currency;
 	}
 
 }

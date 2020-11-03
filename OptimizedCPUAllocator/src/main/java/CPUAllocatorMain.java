@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +18,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import src.main.java.AllocationComponent.*;
+
+/*
+ * Author: Raghul S
+ * Date: 03 Nov 2020
+ */
 
 public class CPUAllocatorMain
 {
@@ -108,9 +114,11 @@ public class CPUAllocatorMain
 	public static void main( String[] args ) throws IOException
 	{
 
-		int hours;
-		int cpus;
-		int price;
+		int hours = 0;
+		int cpus = 0;
+		double price = 0;
+
+		String user_cpus = "", user_hours = "";
 
 		Scanner sc = null;
 		try
@@ -119,16 +127,38 @@ public class CPUAllocatorMain
 
 			System.out.println( "Enter the Requirements" );
 			System.out.print( "Required CPU(s):" );
-			cpus = sc.nextInt();
+			user_cpus = sc.nextLine();
 			System.out.print( "For how many Hours you will be using:" );
-			hours = sc.nextInt();
+			user_hours = sc.nextLine();
 			System.out.print( "Price Range:" );
-			price = sc.nextInt();
+			price = sc.nextDouble();
+		}
+		catch ( InputMismatchException e )
+		{
+			System.out.println( "Please provide valid input" );
+			e.printStackTrace();
+			System.exit( 1 );
 		}
 		finally
 		{
 			if ( sc != null )
 				sc.close();
+		}
+
+		try
+		{
+			if ( !user_cpus.equals( "" ) )
+				cpus = Integer.parseInt( user_cpus );
+			if ( !user_hours.equals( "" ) )
+				hours = Integer.parseInt( user_hours );
+		}
+		catch ( NumberFormatException e )
+		{
+
+			System.out.println( "Please provide valid input" );
+			e.printStackTrace();
+			System.exit( 1 );
+
 		}
 
 		DecimalFormat df = new DecimalFormat( "0.00" );
@@ -146,8 +176,8 @@ public class CPUAllocatorMain
 	private static void displayRegionResult( AllocatedParam region, int hours, DecimalFormat df )
 	{
 		System.out.println( "{" );
-		System.out.println( " \"region\":" + region.getRegion() );
-		System.out.println( " \"total_cost\":\"$" + df.format( region.getTotalAllocatedPrice() * hours ) + "\"" );
+		System.out.println( " \"region\": \"" + region.getRegion() + "\"" );
+		System.out.println( " \"total_cost\":\"" + region.getCurrency() + df.format( region.getTotalAllocatedPrice() * hours ) + "\"" );
 		System.out.println( " \"servers\" :[ " );
 		if ( region.getCpuLargeCount() > 0 )
 			System.out.println( "(\"large\"," + region.getCpuLargeCount() + ")" );
@@ -191,7 +221,7 @@ public class CPUAllocatorMain
 		return prop;
 	}
 
-	private static List<AllocatedParam> get_costs( int hours, int cpus, int price )
+	private static List<AllocatedParam> get_costs( int hours, int cpus, double price )
 	{
 
 		Properties prop = null;
@@ -203,6 +233,9 @@ public class CPUAllocatorMain
 		File folder = new File( propLocation );
 
 		File[] listOfFiles = folder.listFiles();
+
+		if ( listOfFiles.length == 0 )
+			System.out.println( "Please load the region-wise ratesheet property file " );
 
 		for ( int i = 0; i < listOfFiles.length; i++ )
 		{
@@ -270,6 +303,7 @@ public class CPUAllocatorMain
 	private static void loadPropertyData( AllocatedParam allocated, InputParam input, Properties prop )
 	{
 		allocated.setRegion( prop.getProperty( "region" ) );
+		allocated.setCurrency( prop.getProperty( "currency" ) );
 
 		if ( prop.get( "large" ) != null ) // handling the data missing or no data scenario
 			input.setCpuLargeCost( Double.parseDouble( ( String ) prop.get( "large" ) ) );

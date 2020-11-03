@@ -4,6 +4,10 @@ import src.main.java.AllocatedParam;
 import src.main.java.AllocatorChain;
 import src.main.java.Constants;
 import src.main.java.InputParam;
+/*
+ * Author: Raghul S
+ * Date: 03 Nov 2020
+ */
 
 public class AllocatexLargeCPU implements AllocatorChain
 {
