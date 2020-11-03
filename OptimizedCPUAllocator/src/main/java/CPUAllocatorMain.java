@@ -36,10 +36,16 @@ public class CPUAllocatorMain
 		Map<AllocatorChain, Double> costPerUnitMap = new HashMap<AllocatorChain, Double>();
 
 		if ( input.getCpu10xLargeCost() > 0 )
+		{
+			//if 0, the rate is missing in the rate sheet property file -- it should not be considered
 			costPerUnitMap.put( new Allocate10xLargeCPU(), input.getCpu10xLargeCost() / 32 );
+		}
 
 		if ( input.getCpu8xLargeCost() > 0 )
+		{
+			//getting the per CPU price for each server
 			costPerUnitMap.put( new Allocate8xLargeCPU(), input.getCpu8xLargeCost() / 16 );
+		}
 
 		if ( input.getCpu4xLargeCost() > 0 )
 			costPerUnitMap.put( new Allocate4xLargeCPU(), input.getCpu4xLargeCost() / 8 );
@@ -53,6 +59,7 @@ public class CPUAllocatorMain
 		if ( input.getCpuLargeCost() > 0 )
 			costPerUnitMap.put( new AllocateLargeCPU(), input.getCpuLargeCost() );
 
+		//sorting the server category based on the rates per CPU for best value
 		Map<AllocatorChain, Double> sortedMap = sortByValue( costPerUnitMap );
 
 		AllocatorChain prev = null;
@@ -65,7 +72,10 @@ public class CPUAllocatorMain
 				this.first = entry.getKey();
 			}
 			else
+			{
+				// following Chain of Responsibility design patter for delegating the items in the chain
 				prev.setNextChain( entry.getKey() );
+			}
 
 			prev = entry.getKey();
 
@@ -97,33 +107,29 @@ public class CPUAllocatorMain
 
 	public static void main( String[] args ) throws IOException
 	{
-		// TODO Auto-generated method stub
-
-		/*
-		 * to write 1. ordering the cpu's based on cost per cpu 2. reading the input
-		 * property file 3. setting the chain 4. pritning the values 5. comparator class
-		 * to sort the region param, write a method get_cost
-		 */
-		/* 1. to give handle to add locations 
-		 * 2. to multiple hours back*/
-
-		//int hours = 10;
-		//int cpus = 110;
-		//int price = 14;
 
 		int hours;
 		int cpus;
 		int price;
 
-		Scanner sc = new Scanner( System.in );
+		Scanner sc = null;
+		try
+		{
+			sc = new Scanner( System.in );
 
-		System.out.println( "Enter the Requirements" );
-		System.out.print( "Required CPU(s):" );
-		cpus = sc.nextInt();
-		System.out.print( "For how many Hours you will be using:" );
-		hours = sc.nextInt();
-		System.out.print( "Price Range:" );
-		price = sc.nextInt();
+			System.out.println( "Enter the Requirements" );
+			System.out.print( "Required CPU(s):" );
+			cpus = sc.nextInt();
+			System.out.print( "For how many Hours you will be using:" );
+			hours = sc.nextInt();
+			System.out.print( "Price Range:" );
+			price = sc.nextInt();
+		}
+		finally
+		{
+			if ( sc != null )
+				sc.close();
+		}
 
 		DecimalFormat df = new DecimalFormat( "0.00" );
 
@@ -131,11 +137,9 @@ public class CPUAllocatorMain
 
 		for ( AllocatedParam region : regionWiseAllocatedResult )
 		{
+			//region-wise sorted results
 			displayRegionResult( region, hours, df );
 		}
-
-		if ( sc != null )
-			sc.close();
 
 	}
 
@@ -190,10 +194,11 @@ public class CPUAllocatorMain
 	private static List<AllocatedParam> get_costs( int hours, int cpus, int price )
 	{
 
+		Properties prop = null;
 		List<AllocatedParam> allocatedList = new ArrayList<>();
 
+		//File seperator from system property to make it platform independant
 		String propLocation = "src" + Constants.SEPERATOR + "main" + Constants.SEPERATOR + "resource" + Constants.SEPERATOR;
-		Properties prop = null;
 
 		File folder = new File( propLocation );
 
@@ -201,6 +206,8 @@ public class CPUAllocatorMain
 
 		for ( int i = 0; i < listOfFiles.length; i++ )
 		{
+			// iterating the list of region-wise property files which has the rate sheet
+			// this way we can add new regions with minimal or no code change
 			if ( listOfFiles[i].isFile() )
 			{
 				try
@@ -210,7 +217,6 @@ public class CPUAllocatorMain
 					InputParam input = new InputParam();
 					AllocatedParam allocated = new AllocatedParam();
 
-					//check proce per hour
 					loadPropertyData( allocated, input, prop );
 
 					double pricePerHour = price / hours;
@@ -219,7 +225,7 @@ public class CPUAllocatorMain
 					input.setRequiredCount( cpus );
 
 					CPUAllocatorMain cpuAllocatorMain = new CPUAllocatorMain( input );
-					cpuAllocatorMain.first.allocate( input, allocated );
+					cpuAllocatorMain.first.allocate( input, allocated ); //calling the first item of the chain
 
 					allocatedList.add( allocated );
 
@@ -237,14 +243,13 @@ public class CPUAllocatorMain
 			}
 		}
 
+		//returning the sorted list
 		return sortByCost( allocatedList );
 	}
 
 	private static List<AllocatedParam> sortByCost( List<AllocatedParam> allocatedList )
 	{
-		//		List<AllocatedParam> sortedList = new ArrayList<>();
 
-		// Sort the list 
 		Collections.sort( allocatedList, new Comparator<AllocatedParam>()
 		{
 			public int compare( AllocatedParam o1, AllocatedParam o2 )
@@ -266,7 +271,7 @@ public class CPUAllocatorMain
 	{
 		allocated.setRegion( prop.getProperty( "region" ) );
 
-		if ( prop.get( "large" ) != null )
+		if ( prop.get( "large" ) != null ) // handling the data missing or no data scenario
 			input.setCpuLargeCost( Double.parseDouble( ( String ) prop.get( "large" ) ) );
 		if ( prop.get( "xlarge" ) != null )
 			input.setCpuxLargeCost( Double.parseDouble( ( String ) prop.get( "xlarge" ) ) );

@@ -24,6 +24,7 @@ public class Allocate10xLargeCPU implements AllocatorChain
 
 		if ( input.getRequiredCount() > 0 )
 		{
+			//when count is given, not considering the input cost -- to give the minimum possible cost for the number of requested CPU(s)
 			int remaining = input.getRequiredCount() - allocated.getTotalAllocatedCount();
 			if ( remaining > Constants.TOTAL_CPU_10XLARGE )
 				allocation = remaining / Constants.TOTAL_CPU_10XLARGE;
@@ -45,6 +46,7 @@ public class Allocate10xLargeCPU implements AllocatorChain
 
 		if ( ( input.getRequiredCount() > 0 && allocated.getTotalAllocatedCount() < input.getRequiredCount() ) || ( input.getRequiredPrice() > 0 && allocated.getTotalAllocatedPrice() < input.getRequiredPrice() ) )
 		{
+			//delegating the request
 			this.allocatorChain.allocate( input, allocated );
 		}
 

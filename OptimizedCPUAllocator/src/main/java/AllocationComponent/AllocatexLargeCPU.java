@@ -24,6 +24,7 @@ public class AllocatexLargeCPU implements AllocatorChain
 
 		if ( input.getRequiredCount() > 0 )
 		{
+			//since this is the least unit, allocating all the remaining CPU(s)
 			int remaining = input.getRequiredCount() - allocated.getTotalAllocatedCount();
 			if ( remaining > Constants.TOTAL_CPU_XLARGE )
 				allocation = remaining / Constants.TOTAL_CPU_XLARGE;
@@ -45,6 +46,7 @@ public class AllocatexLargeCPU implements AllocatorChain
 
 		if ( ( input.getRequiredCount() > 0 && allocated.getTotalAllocatedCount() < input.getRequiredCount() ) || ( input.getRequiredPrice() > 0 && allocated.getTotalAllocatedPrice() < input.getRequiredPrice() ) )
 		{
+			// this will not be called - no element after this chain
 			this.allocatorChain.allocate( input, allocated );
 		}
 
