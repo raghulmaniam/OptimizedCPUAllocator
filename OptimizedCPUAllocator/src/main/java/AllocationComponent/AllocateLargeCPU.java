@@ -1,4 +1,9 @@
-package src.main.java;
+package src.main.java.AllocationComponent;
+
+import src.main.java.AllocatedParam;
+import src.main.java.AllocatorChain;
+import src.main.java.Constants;
+import src.main.java.InputParam;
 
 public class AllocateLargeCPU implements AllocatorChain
 {

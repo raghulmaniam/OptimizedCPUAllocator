@@ -1,6 +1,11 @@
-package src.main.java;
+package src.main.java.AllocationComponent;
 
-public class Allocate8xLargeCPU implements AllocatorChain
+import src.main.java.AllocatedParam;
+import src.main.java.AllocatorChain;
+import src.main.java.Constants;
+import src.main.java.InputParam;
+
+public class AllocatexLargeCPU implements AllocatorChain
 {
 
 	private AllocatorChain allocatorChain;
@@ -20,23 +25,23 @@ public class Allocate8xLargeCPU implements AllocatorChain
 		if ( input.getRequiredCount() > 0 )
 		{
 			int remaining = input.getRequiredCount() - allocated.getTotalAllocatedCount();
-			if ( remaining > Constants.TOTAL_CPU_8XLARGE )
-				allocation = remaining / Constants.TOTAL_CPU_8XLARGE;
+			if ( remaining > Constants.TOTAL_CPU_XLARGE )
+				allocation = remaining / Constants.TOTAL_CPU_XLARGE;
 
 		}
 		else if ( input.getRequiredPrice() > 0 )
 		{
 			double remaining = input.getRequiredPrice() - allocated.getTotalAllocatedPrice();
-			if ( remaining > input.getCpu8xLargeCost() )
-				allocation = ( int ) ( remaining / input.getCpu8xLargeCost() );
+			if ( remaining > input.getCpuxLargeCost() )
+				allocation = ( int ) ( remaining / input.getCpuxLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + " 8x Large CPU(s)" );
+		System.out.println( "Allocating " + allocation + " x Large CPU(s)" );
 
-		allocated.setCpu8xLargeCount( allocation );
+		allocated.setCpuxLargeCount( allocation );
 
-		allocated.addAllocatedCount( allocation * Constants.TOTAL_CPU_8XLARGE );
-		allocated.addAllocatedPrice( allocation * input.getCpu8xLargeCost() );
+		allocated.addAllocatedCount( allocation * Constants.TOTAL_CPU_XLARGE );
+		allocated.addAllocatedPrice( allocation * input.getCpuxLargeCost() );
 
 		if ( ( input.getRequiredCount() > 0 && allocated.getTotalAllocatedCount() < input.getRequiredCount() ) || ( input.getRequiredPrice() > 0 && allocated.getTotalAllocatedPrice() < input.getRequiredPrice() ) )
 		{
