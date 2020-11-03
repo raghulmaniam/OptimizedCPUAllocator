@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Scanner;
 
 import src.main.java.AllocationComponent.*;
 
@@ -106,9 +107,23 @@ public class CPUAllocatorMain
 		/* 1. to give handle to add locations 
 		 * 2. to multiple hours back*/
 
-		int hours = 10;
-		int cpus = 110;
-		int price = 14;
+		//int hours = 10;
+		//int cpus = 110;
+		//int price = 14;
+
+		int hours;
+		int cpus;
+		int price;
+
+		Scanner sc = new Scanner( System.in );
+
+		System.out.println( "Enter the Requirements" );
+		System.out.print( "Required CPU(s):" );
+		cpus = sc.nextInt();
+		System.out.print( "For how many Hours you will be using:" );
+		hours = sc.nextInt();
+		System.out.print( "Price Range:" );
+		price = sc.nextInt();
 
 		DecimalFormat df = new DecimalFormat( "0.00" );
 
@@ -116,20 +131,19 @@ public class CPUAllocatorMain
 
 		for ( AllocatedParam region : regionWiseAllocatedResult )
 		{
-
-			displayRegionResult( region, df );
-
-			//to sort it 
-
+			displayRegionResult( region, hours, df );
 		}
+
+		if ( sc != null )
+			sc.close();
 
 	}
 
-	private static void displayRegionResult( AllocatedParam region, DecimalFormat df )
+	private static void displayRegionResult( AllocatedParam region, int hours, DecimalFormat df )
 	{
 		System.out.println( "{" );
 		System.out.println( " \"region\":" + region.getRegion() );
-		System.out.println( " \"total_cost\":\"$" + df.format( region.getTotalAllocatedPrice() ) + "\"" );
+		System.out.println( " \"total_cost\":\"$" + df.format( region.getTotalAllocatedPrice() * hours ) + "\"" );
 		System.out.println( " \"servers\" :[ " );
 		if ( region.getCpuLargeCount() > 0 )
 			System.out.println( "(\"large\"," + region.getCpuLargeCount() + ")" );
