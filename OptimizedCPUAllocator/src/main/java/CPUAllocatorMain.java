@@ -52,7 +52,6 @@ public class CPUAllocatorMain
 		if ( input.getCpuLargeCost() > 0 )
 			costPerUnitMap.put( new AllocateLargeCPU(), input.getCpuLargeCost() );
 
-		//check how it is getting sorted -- to be made desc
 		Map<AllocatorChain, Double> sortedMap = sortByValue( costPerUnitMap );
 
 		AllocatorChain prev = null;
@@ -224,8 +223,29 @@ public class CPUAllocatorMain
 			}
 		}
 
-		return allocatedList;
+		return sortByCost( allocatedList );
+	}
 
+	private static List<AllocatedParam> sortByCost( List<AllocatedParam> allocatedList )
+	{
+		//		List<AllocatedParam> sortedList = new ArrayList<>();
+
+		// Sort the list 
+		Collections.sort( allocatedList, new Comparator<AllocatedParam>()
+		{
+			public int compare( AllocatedParam o1, AllocatedParam o2 )
+			{
+				if ( o1.getTotalAllocatedPrice() > o2.getTotalAllocatedPrice() )
+					return 1;
+				else if ( o1.getTotalAllocatedPrice() < o2.getTotalAllocatedPrice() )
+					return -1;
+				else
+					return 0;
+
+			}
+		} );
+
+		return allocatedList;
 	}
 
 	private static void loadPropertyData( AllocatedParam allocated, InputParam input, Properties prop )
