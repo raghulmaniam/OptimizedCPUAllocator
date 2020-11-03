@@ -3,6 +3,8 @@ package src.main.java;
 public class AllocatedParam
 {
 
+	private String region;
+
 	private int totalAllocatedCount;
 	private double totalAllocatedPrice;
 
@@ -91,6 +93,16 @@ public class AllocatedParam
 	public void setCpu10xLargeCount( int cpu10xLargeCount )
 	{
 		this.cpu10xLargeCount = cpu10xLargeCount;
+	}
+
+	public String getRegion()
+	{
+		return region;
+	}
+
+	public void setRegion( String region )
+	{
+		this.region = region;
 	}
 
 }

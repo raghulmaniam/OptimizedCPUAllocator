@@ -36,7 +36,7 @@ public class Allocate10xLargeCPU implements AllocatorChain
 				allocation = ( int ) ( remaining / input.getCpu10xLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + " 10x Large CPU(s)" );
+		//System.out.println( "Allocating " + allocation + " 10x Large CPU(s)" );
 
 		allocated.setCpu10xLargeCount( allocation );
 

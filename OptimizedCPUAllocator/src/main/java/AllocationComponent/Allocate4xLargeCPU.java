@@ -36,7 +36,7 @@ public class Allocate4xLargeCPU implements AllocatorChain
 				allocation = ( int ) ( remaining / input.getCpu4xLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + " 4x Large CPU(s)" );
+		//System.out.println( "Allocating " + allocation + " 4x Large CPU(s)" );
 
 		allocated.setCpu4xLargeCount( allocation );
 

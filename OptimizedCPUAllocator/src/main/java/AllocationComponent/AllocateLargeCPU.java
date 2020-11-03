@@ -36,7 +36,7 @@ public class AllocateLargeCPU implements AllocatorChain
 				allocation = ( int ) ( remaining / input.getCpuLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + "  Large CPU(s)" );
+		//System.out.println( "Allocating " + allocation + "  Large CPU(s)" );
 
 		allocated.setCpuLargeCount( allocation );
 

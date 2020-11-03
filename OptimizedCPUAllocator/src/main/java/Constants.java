@@ -7,6 +7,8 @@ public class Constants
 	public static final int TOTAL_CPU_2XLARGE = 4;
 	public static final int TOTAL_CPU_4XLARGE = 8;
 	public static final int TOTAL_CPU_8XLARGE = 16;
-	public static final int TOTAL_CPU_10XLARGE = 32;;
+	public static final int TOTAL_CPU_10XLARGE = 32;
+	
+	public static final String SEPERATOR = System.getProperty("file.separator");
 
 }

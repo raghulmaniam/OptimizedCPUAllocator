@@ -36,7 +36,7 @@ public class Allocate8xLargeCPU implements AllocatorChain
 				allocation = ( int ) ( remaining / input.getCpu8xLargeCost() );
 		}
 
-		System.out.println( "Allocating " + allocation + " 8x Large CPU(s)" );
+		//System.out.println( "Allocating " + allocation + " 8x Large CPU(s)" );
 
 		allocated.setCpu8xLargeCount( allocation );
 
